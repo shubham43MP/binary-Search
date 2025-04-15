@@ -1,19 +1,17 @@
 const express = require('express');
-const cors=require('cors')
 const app = express();
 
 app.use(express.json());
-app.use(cors())
 
 app.post('/functions/bisectionLookup', (req, res) => {
-  const { arr, target } = req.body;
+  const { arr, target } = req.body.input;
 
   if (!Array.isArray(arr)) {
-    return res.status(400).json({ error: 'Invalid array' });
+    return res.status(400).json({ error: 'Invalid array input. Must be an array of numbers.' });
   }
 
-  if(typeof target!=='number'){
-    return res.status(400).json({error:'Invalid target input'})
+  if (typeof target !== 'number') {
+    return res.status(400).json({ error: 'Invalid target input. Target must be a number.' });
   }
 
   const binarySearch = (arr, target) => {
@@ -27,14 +25,12 @@ app.post('/functions/bisectionLookup', (req, res) => {
       else right = mid - 1;
     }
     return -1;
-
   };
 
   const index = binarySearch(arr, target);
   res.json({ output: index });
 });
 
-// Documentation endpoint for func.live
 app.get('/functions/bisectionLookup', (req, res) => {
   res.json({
     name: 'bisectionLookup',
@@ -72,3 +68,4 @@ app.get('/functions/bisectionLookup', (req, res) => {
 app.listen(3000, () => {
   console.log('bisectionLookup running at http://localhost:3000');
 });
+
