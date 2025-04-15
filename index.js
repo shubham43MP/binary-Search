@@ -1,7 +1,9 @@
 const express = require('express');
+const cors=require('cors')
 const app = express();
 
 app.use(express.json());
+app.use(cors())
 
 app.post('/functions/bisectionLookup', (req, res) => {
   const { arr, target } = req.body;
