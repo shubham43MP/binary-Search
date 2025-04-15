@@ -8,8 +8,12 @@ app.use(cors())
 app.post('/functions/bisectionLookup', (req, res) => {
   const { arr, target } = req.body;
 
-  if (!Array.isArray(arr) || typeof target !== 'number') {
-    return res.status(400).json({ error: 'Invalid input' });
+  if (!Array.isArray(arr)) {
+    return res.status(400).json({ error: 'Invalid array' });
+  }
+
+  if(typeof target!=='number'){
+    return res.status(400).json({error:'Invalid target input'})
   }
 
   const binarySearch = (arr, target) => {
